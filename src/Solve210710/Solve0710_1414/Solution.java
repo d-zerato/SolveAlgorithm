@@ -6,10 +6,22 @@ import java.util.List;
 public class Solution {
     //
     public int findMinFibonacciNumbers(int k) {
+        //
+        List<Integer> fibonacciArray = this.generateFibonacciArray(k);
 
-        System.out.println(this.generateFibonacciArray(k));
+        int result = 0;
+        int remainValue = k;
 
-        return 0;
+        while(remainValue > 0) {
+            //
+            remainValue = this.getRemainderValue(fibonacciArray, remainValue);
+
+            fibonacciArray = divideFibonacciArray(fibonacciArray, remainValue);
+
+            result += 1;
+        }
+
+        return result;
     }
 
     public List<Integer> generateFibonacciArray(int findValue) {
@@ -18,7 +30,7 @@ public class Solution {
         int recentValue = 0;
         int offset = 0;
 
-        while (recentValue < findValue) {
+        while (true) {
 
             int firstPrev = 0;
             int secondPrev = 0;
@@ -42,10 +54,50 @@ public class Solution {
             }
 
             recentValue = firstPrev + secondPrev;
-            fibonacciList.add(recentValue);
-            offset += 1;
+
+            if (recentValue > findValue) {
+                break;
+            } else {
+                fibonacciList.add(recentValue);
+                offset += 1;
+            }
         }
 
         return fibonacciList;
+    }
+
+    public List<Integer> divideFibonacciArray(List<Integer> fibonacciArray, int maxValue) {
+        //
+        List<Integer> newArray = new ArrayList<>();
+
+        for (Integer intValue : fibonacciArray) {
+            if (intValue <= maxValue) {
+                newArray.add(intValue);
+            } else {
+                break;
+            }
+        }
+
+        return newArray;
+    }
+
+    public int getRemainderValue(List<Integer> fibonacciArray, int findValue) {
+        //
+        int maxValue = 0;
+
+        for (Integer targetValue : fibonacciArray) {
+            //
+            if (targetValue == findValue) {
+                return 0;
+            }
+
+            if (targetValue > findValue) {
+                break;
+            }
+
+            maxValue = targetValue;
+        }
+
+        return findValue - maxValue;
     }
 }

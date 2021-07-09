@@ -4,6 +4,6 @@ public class TestBootApplication {
     //
     public static void main(String[] args) {
         Solution solution = new Solution();
-        solution.findMinFibonacciNumbers(8);
+        System.out.println(solution.findMinFibonacciNumbers(7));
     }
 }
